@@ -5,18 +5,21 @@ import {
   getCustomerById,
   updateCustomer,
   deleteCustomer,
+  getAllCustomers,
 } from "../controllers/customers.controllers.js";
 
 export const customerRouter = Router();
 
+customerRouter.get("/", verifyToken,getAllCustomers);
+
 // Create a new customer
-customerRouter.post("/new", addCustomer);
+customerRouter.post("/new",addCustomer);
 
 // Get a customer by ID
-customerRouter.get("/:customer_id", getCustomerById);
+customerRouter.get("/:customer_id", verifyToken,getCustomerById);
 
 // Update a customer by ID
-customerRouter.put("/:customer_id", updateCustomer);
+customerRouter.put("/:customer_id/update", verifyToken,updateCustomer);
 
 // Delete a customer by ID
-customerRouter.delete("/:customer_id", deleteCustomer);
+customerRouter.delete("/:customer_id/delete", verifyToken,deleteCustomer);

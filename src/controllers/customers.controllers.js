@@ -18,49 +18,62 @@ const isCustomerExist = async (customer_id) => {
   return result.recordset.length > 0;
 };
 
+export const getAllCustomers = async (req, res) => {
+  try {
+    const connection = await sql.connect(dbConfig);
+    const query = "SELECT * FROM Customers";
+    const result = await connection.query(query);
+
+    const customers = result.recordset;
+
+    return res.status(200).json({ customers });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  } finally {
+    sql.close();
+  }
+};
+
 export const addCustomer = async (req, res) => {
-    try {
-    
-      const { email } = req.body;
-  
-        const connection = await sql.connect(dbConfig);
-  
-      // Check if the user already exists
-      const query1 = "SELECT * FROM customers WHERE email = @email";
-      const result = await connection
-        .request()
-        .input("email", sql.VarChar, email)
-        .query(query1);
-  
-      if (result.recordset.length > 0) {
-        return res.json({ message: "User already exists. Please log in." });
-      } else {
-      
-        const { first_name, last_name, phone_number ,email,password} = req.body;
-        let hashPassword = bcrypt.hashSync(password, 10);
-      const connection = await sql.connect(dbConfig);
+  try {
+    const { email, first_name, last_name, phone_number, password } = req.body;
+
+    const connection = await sql.connect(dbConfig);
+
+    // Check if the user already exists
+    const query1 = "SELECT * FROM customers WHERE email = @email";
+    const result = await connection
+      .request()
+      .input("email", sql.VarChar, email)
+      .query(query1);
+
+    if (result.recordset.length > 0) {
+      return res.json({ message: "User already exists. Please log in." });
+    } else {
+      let hashPassword = bcrypt.hashSync(password, 10);
+
       const query = `
-        INSERT INTO Customers (first_name, last_name, phone_number, email,password)
-        VALUES (@first_name, @last_name, @phone_number, @email,@password)
+        INSERT INTO Customers (first_name, last_name, phone_number, email, password)
+        VALUES (@first_name, @last_name, @phone_number, @email, @password)
       `;
-  
+
       await connection
         .request()
         .input("first_name", sql.VarChar, first_name)
         .input("last_name", sql.VarChar, last_name)
         .input("phone_number", sql.VarChar, phone_number)
-        .input("email", sql.VarChar,email)
+        .input("email", sql.VarChar, email)
         .input("password", sql.VarChar, hashPassword)
         .query(query);
-  
+
       return res.status(200).json({ message: "Customer created successfully" });
-      }
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    } finally {
-      sql.close();
     }
-  };
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  } finally {
+    sql.close();
+  }
+};
 
 export const getCustomerById = async (req, res) => {
   try {
@@ -111,6 +124,7 @@ export const updateCustomer = async (req, res) => {
       .input("last_name", sql.VarChar, last_name)
       .input("phone_number", sql.VarChar, phone_number)
       .input("email", sql.VarChar, email)
+      .input("customer_id", sql.Int, customer_id)
       .query(query);
 
     return res.status(200).json({ message: "Customer updated successfully" });
