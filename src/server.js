@@ -14,7 +14,7 @@ const app = express();
 app.use(express.static('public'));
 app.use('/checkout',checkoutRouter);
 app.use(json())
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors());
 app.use('/auth', authRouter);
 app.use('/products',productRouter);
 app.use('/orders',orderRouter)
@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
   res.send('hey');
 });
 
-app.listen(PORT, () => {
+app.listen(PORT || 5000, () => {
   console.log(`Server is up and running on port ${PORT}`);
 });
 

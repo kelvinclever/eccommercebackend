@@ -10,8 +10,8 @@ export const dbConfig = {
     server:SERVER,
     database:DATABASE,
     options:{
-        encrypt:false,
-        trustServerCertificate:true
+        encrypt:true,
+        trustServerCertificate:false
     }
 
 }

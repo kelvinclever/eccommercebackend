@@ -19,7 +19,7 @@ customerRouter.post("/new",addCustomer);
 customerRouter.get("/:customer_id", verifyToken,getCustomerById);
 
 // Update a customer by ID
-customerRouter.put("/:customer_id/update", verifyToken,updateCustomer);
+customerRouter.put("/:customer_id/update",updateCustomer);
 
 // Delete a customer by ID
 customerRouter.delete("/:customer_id/delete", verifyToken,deleteCustomer);
