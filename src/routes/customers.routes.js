@@ -10,7 +10,7 @@ import {
 
 export const customerRouter = Router();
 
-customerRouter.get("/", verifyToken,getAllCustomers);
+customerRouter.get("/",verifyToken,getAllCustomers);
 
 // Create a new customer
 customerRouter.post("/new",addCustomer);

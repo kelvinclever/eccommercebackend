@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { addadmin, adminlogin, deleteAdmin, getAlladmin, updateAdmin } from "../controllers/admin.controllers.js";
+import { verifyToken } from "../middleware/authenticateroutes.js";
 
 export const adminRouter = Router();
 

@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "index.js",
+  "main": "server.js",
   "engines": {
-    "node": "18.15.0"
+    "node": ">=18.15.0"
   },
   "scripts": {
     "start": "nodemon ./src/server.js"
