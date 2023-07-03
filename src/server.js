@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import { authRouter } from './routes/auth.routes.js';
 import { productRouter } from './routes/products.routes.js';
@@ -10,6 +11,7 @@ import { customerRouter } from './routes/customers.routes.js';
 import { checkoutRouter } from './routes/checkout.route.js';
 import { adminRouter } from './routes/admin.routes.js';
 import { dbConfig } from './config/config.js';
+
 
 dotenv.config();
 
@@ -26,12 +28,13 @@ app.use('/customers',customerRouter);
 app.use('/admins',adminRouter);
 
 
+
 app.get('/', (req, res) => {
   res.send('hey this is QCS api');
 });
 
 app.listen(dbConfig.port|| 5000, () => {
   console.log(`Server is up and running on port `);
-});
 
-
+}
+)
