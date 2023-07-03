@@ -1,8 +1,8 @@
 import dotenv from "dotenv"
 dotenv.config() 
  
-const {USER,PASSWORD,SERVER,DATABASE} = process.env
-assert(PORT, 'PORT is required');
+const {USER,PORT,PASSWORD,SERVER,DATABASE} = process.env
+
 
 export const dbConfig = {
     port:PORT,
